@@ -7,8 +7,15 @@
     </h:head>
     <h:body>
         <ui:composition template="common.xhtml">            
-            <ui:define name = "header">
-                <h2>Search results</h2>
+            <ui:define name = "content">
+                <h2>Search for songs</h2>
+                <br/>
+                <form>
+                    <label for="">Song name</label>
+                    <input tppe="text" name="song_name"></input>
+                    <input type ="submit" value="Search"></input>
+                </form>
+
             </ui:define>            
         </ui:composition>
     </h:body>
