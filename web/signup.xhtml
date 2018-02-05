@@ -1,0 +1,36 @@
+<html xmlns = "http://www.w3.org/1999/xhtml"   
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:composition>
+        <h3>Sign up!</h3><br/>
+
+        <div class = "col-xs-12 col-md-8 col-xl-10">
+            <h:form>
+                <div class="form-group">
+                    <label for="Name">Name:</label>
+                    <h:inputText class="form-control" value="#{signup.name}" id="name"/>
+                </div>
+                <div class="form-group">
+                    <label for="username">User name:</label>
+                    <h:inputText  class="form-control" value="#{signup.username}" id="username"/>
+                </div>                
+                <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <h:inputText  class="form-control" value="#{signup.email}" id="email"/>
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <h:inputSecret  class="form-control" value="#{signup.password}" id="pwd"/>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_pwd">Confirm password:</label>
+                    <h:inputSecret class="form-control" value="#{signup.confirmPassword}" id="confirm_pwd"/>
+                </div>
+                <h:commandButton value="submit" action="#{signup.submit}" />
+
+            </h:form>
+
+        </div>
+
+    </ui:composition>
+</html>
