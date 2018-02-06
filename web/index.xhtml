@@ -6,9 +6,7 @@
     <h:body>        
         <ui:composition template="common.xhtml">            
             <ui:define name = "content">
-                <h:panelGroup id="tableRenderPanel" rendered="#{userBean.isLoggedIn}">
-                    <ui:include src="signup.xhtml"></ui:include>
-                </h:panelGroup>
+                <ui:include src="signup.xhtml"></ui:include>
             </ui:define>            
         </ui:composition>
     </h:body>

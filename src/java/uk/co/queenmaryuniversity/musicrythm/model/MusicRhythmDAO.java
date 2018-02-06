@@ -35,6 +35,12 @@ public class MusicRhythmDAO {
         // save the playlist in the database
     }
     
+    public List<Song> retrieveSongs(){
+        Query query = em.createQuery("Select s from Song s ");        
+        return query.getResultList();
+    }
+    
+    
     public List<Song> findSongsByName(String name){
         Query query = em.createQuery("Select s from Song s where s.name LIKE :songName");
         query.setParameter("songName", "%"+name+"%");
