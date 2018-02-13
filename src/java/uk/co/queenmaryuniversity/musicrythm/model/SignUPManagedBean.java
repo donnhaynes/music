@@ -31,7 +31,7 @@ public class SignUPManagedBean {
     }
 
     public void submit() {
-        System.out.println("Data submitted:" + user.getName());
+        
         MusicRhythmDAO dao = new MusicRhythmDAO();
         dao.saveUser(user);
         try {

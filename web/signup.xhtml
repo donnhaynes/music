@@ -26,7 +26,7 @@
                     <label for="confirm_pwd">Confirm password:</label>
                     <h:inputSecret class="form-control" value="#{signup.confirmPassword}" id="confirm_pwd"/>
                 </div>
-                <h:commandButton value="submit" action="#{signup.submit}" />
+                <h:commandButton value="submit" action="#{signup.submit()}" />
 
             </h:form>
 
