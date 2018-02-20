@@ -69,4 +69,8 @@ public class MusicRhythmDAO {
         dao.saveUser(user);
 
     }
+
+    public List<Song> findSongsByQuery(String searchQuery) {
+        return findSongsByName(searchQuery);
+    }
 }

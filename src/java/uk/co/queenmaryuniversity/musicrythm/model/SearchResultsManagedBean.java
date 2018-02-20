@@ -8,7 +8,6 @@ package uk.co.queenmaryuniversity.musicrythm.model;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 
 /**
@@ -33,6 +32,7 @@ public class SearchResultsManagedBean {
         songs = dao.retrieveSongs();
     }
 
+    
     public List<Song> getSongs() {
         return songs;
     }

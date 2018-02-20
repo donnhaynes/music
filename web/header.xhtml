@@ -14,10 +14,9 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">User Profile</a></li>
-                        <li><a href="#">Search Song</a></li>
-                        <li><a href="#">Broswe Playlists</a></li>
+                        <li class="active"><a href="#">Home</a></li>                        
+                        <li><a href="searchpage.xhtml">Search Song</a></li>
+                        <h:panelGroup rendered="#{login.isLoggedIn}"><li><a href="#">Browse Playlists</a></li></h:panelGroup>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
