@@ -36,3 +36,11 @@ footer {
         display: none; 
     }
 }
+
+#circle{
+    height:2rem;
+    width:2rem;
+    border-radius: 4rem;
+    opacity: 1.0;
+    background-color:red;
+}

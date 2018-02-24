@@ -17,6 +17,60 @@
                             <h:commandButton class="btn btn-info" value="go" action="#{searchsongs.submit()}" />
                         </span>
                     </div>
+                    <ol>
+                        <li>Click on "Start Tapping" to start recording the rhythm.</li>
+                        <li>Use any key for tapping the rhythm.</li>                     
+                    </ol>
+                    <div class="rythmn-search-controls">
+                        <button id="startTapButton" type="button" class="btn btn-info" onclick="startRecordingBPM();">Start Tapping</button>
+                        <div id="circle" class="offline"></div>
+                        <progress value="0" max="10" id="progressBar"></progress>
+                    </div>
+                    <h:inputText id="bpm" value="#{searchsongs.rythmn}" />
+                    <script>
+                        /* <![CDATA[ */
+                        var startTime;
+                        var endTime;
+                        var tapsTimeStamps = [];
+                        function startRecordingBPM() {
+                            $('#startTapButton').prop('disabled', true);
+                            startTime = Date();
+                            document.body.addEventListener('keydown', function (e) {
+                                tapsTimeStamps.push(new Date());
+                                $("#circle").animate({
+                                    backgroundColor: 'green'
+                                }, 200, function () {
+                                    $("#circle").css("background-color", "red");
+                                });
+
+                            });
+                            var timeleft = 10;
+                            var downloadTimer = setInterval(function () {
+                                document.getElementById("progressBar").value = 10 - (--timeleft);
+                                if (timeleft <= 0) {
+                                    clearInterval(downloadTimer);
+                                    BPMRecordingFinished();
+                                }
+                            }, 1000);
+                        }
+
+                        function BPMRecordingFinished() {
+                            endTime = Date();
+                            var taps = "";
+                            var tapIntervals = [];
+                            var total = 0;
+                            for (var i = 0; i < tapsTimeStamps.length - 1; i++) {
+                                tapIntervals.push(tapsTimeStamps[i + 1].getTime() - tapsTimeStamps[i].getTime());
+                                total += tapsTimeStamps[i + 1].getTime() - tapsTimeStamps[i].getTime();
+                            }
+                            var avg = total / tapIntervals.length;
+                            var bpm = 60 / (avg / 1000);
+                            alert("startTime:" + startTime + " endTime:" + endTime + "\n dates:" + taps + "\nintervals:" + tapIntervals.toString() + " bpm:" + bpm);
+                            $('#startTapButton').prop('disabled', false);
+                            $('#bpm').val(bpm);
+                        }
+                        /* ]]> */
+                    </script>
                 </h:form>
 
 

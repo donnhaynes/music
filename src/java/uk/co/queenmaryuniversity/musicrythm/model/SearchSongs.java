@@ -19,6 +19,7 @@ import javax.enterprise.context.RequestScoped;
 @ConversationScoped
 public class SearchSongs implements Serializable{
     private String searchQuery;
+    private Double rythmn;
     private List<Song> songs;
 
     /**
@@ -48,6 +49,16 @@ public class SearchSongs implements Serializable{
     public void setSongs(List<Song> songs) {
         this.songs = songs;
     }
+
+    public Double getRythmn() {
+        return rythmn;
+    }
+
+    public void setRythmn(Double rythmn) {
+        this.rythmn = rythmn;
+    }
+    
+    
     
     
     
