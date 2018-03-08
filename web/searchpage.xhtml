@@ -9,30 +9,48 @@
     <h:body>
         <ui:composition template="common.xhtml">            
             <ui:define name = "content">
-                <h:form>
+                <h:form id="search_form">
                     <div class="search-title"><h2>Search for songs</h2></div>                    
                     <div class="input-group search-form" >
                         <h:inputText class="form-control" a:placeholder="Song name, artists, album, genre" value="#{searchsongs.searchQuery}" id="searchQuery"/>
                         <span class="input-group-btn">
                             <h:commandButton class="btn btn-info" value="go" action="#{searchsongs.submit()}" />
-                        </span>
+                        </span>                    
                     </div>
-                    <ol>
-                        <li>Click on "Start Tapping" to start recording the rhythm.</li>
-                        <li>Use any key for tapping the rhythm.</li>                     
-                    </ol>
-                    <div class="rythmn-search-controls">
-                        <button id="startTapButton" type="button" class="btn btn-info" onclick="startRecordingBPM();">Start Tapping</button>
-                        <div id="circle" class="offline"></div>
-                        <progress value="0" max="10" id="progressBar"></progress>
+                    <div class="row input-group search-form" >
+                        <h:inputText class="form-control" a:placeholder="BPM" id="bpm" value="#{searchsongs.bpm}" />
                     </div>
-                    <h:inputText id="bpm" value="#{searchsongs.rythmn}" />
+
+                    <div class="row">
+                        <ol>
+                            <li>Click on "Start Tapping" to start recording the rhythm.</li>
+                            <li>Use any key for tapping the rhythm.</li>                     
+                        </ol>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <button id="startTapButton" type="button" class="btn btn-info" onclick="startRecordingBPM();">Start Tapping</button>
+                            </div>
+                            <div class="col-xs-3">
+                                <div id="circle" class="offline"></div>
+                            </div>
+                            <div class="col-xs-3">
+                                <progress value="0" max="10" id="progressBar"></progress>
+                            </div>
+                            <div class="col-xs-3">
+
+                            </div>
+                        </div>
+                    </div>
+
                     <script>
                         /* <![CDATA[ */
                         var startTime;
                         var endTime;
                         var tapsTimeStamps = [];
                         function startRecordingBPM() {
+                            $("[id='search_form:bpm']").prop('disabled', true);
                             $('#startTapButton').prop('disabled', true);
                             startTime = Date();
                             document.body.addEventListener('keydown', function (e) {
@@ -65,9 +83,9 @@
                             }
                             var avg = total / tapIntervals.length;
                             var bpm = 60 / (avg / 1000);
-                            alert("startTime:" + startTime + " endTime:" + endTime + "\n dates:" + taps + "\nintervals:" + tapIntervals.toString() + " bpm:" + bpm);
                             $('#startTapButton').prop('disabled', false);
-                            $('#bpm').val(bpm);
+                            $("[id='search_form:bpm']").val(Math.trunc(bpm));
+                            $("[id='search_form:bpm']").prop('disabled', false);
                         }
                         /* ]]> */
                     </script>

@@ -6,6 +6,7 @@
 package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -72,5 +73,13 @@ public class MusicRhythmDAO {
 
     public List<Song> findSongsByQuery(String searchQuery) {
         return findSongsByName(searchQuery);
+    }
+
+    public List<Song> findSongsByQuery(String searchQuery, Integer bpm) {
+         List<Song> songs = findSongsByName(searchQuery);
+         if (bpm > 0){
+             return songs.stream().filter(song -> ((bpm-10 < song.getRhythm()) && bpm+10 > song.getRhythm())).collect(Collectors.toList()); 
+         }
+         return songs;        
     }
 }
