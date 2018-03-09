@@ -20,6 +20,7 @@ import javax.enterprise.context.RequestScoped;
 public class SearchSongs implements Serializable{
     private String searchQuery;
     private Integer bpm;
+    private Integer range=10;
     private List<Song> songs;
 
     /**
@@ -30,7 +31,7 @@ public class SearchSongs implements Serializable{
 
     public String submit(){
         MusicRhythmDAO dao = new MusicRhythmDAO();
-        this.songs = dao.findSongsByQuery(searchQuery,bpm);
+        this.songs = dao.findSongsByQuery(searchQuery,bpm,range);
         return "searchresults";
     }
     
@@ -57,5 +58,15 @@ public class SearchSongs implements Serializable{
     public void setBpm(Integer bpm) {
         this.bpm = bpm;
     }
+
+    public Integer getRange() {
+        return range;
+    }
+
+    public void setRange(Integer range) {
+        this.range = range;
+    }
+    
+    
     
 }

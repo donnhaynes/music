@@ -75,10 +75,10 @@ public class MusicRhythmDAO {
         return findSongsByName(searchQuery);
     }
 
-    public List<Song> findSongsByQuery(String searchQuery, Integer bpm) {
+    public List<Song> findSongsByQuery(String searchQuery, Integer bpm,Integer range) {
          List<Song> songs = findSongsByName(searchQuery);
-         if (bpm > 0){
-             return songs.stream().filter(song -> ((bpm-10 < song.getRhythm()) && bpm+10 > song.getRhythm())).collect(Collectors.toList()); 
+         if (bpm != null && bpm > 0){
+             return songs.stream().filter(song -> ((bpm-range < song.getBpm()) && bpm+range > song.getBpm())).collect(Collectors.toList()); 
          }
          return songs;        
     }

@@ -26,7 +26,7 @@ public class Song implements Serializable {
     private Long id;
     private String name;
     private Long duration;
-    private Integer rhythm;
+    private Integer bpm;
     private Genre genre;
     
     @ManyToMany
@@ -59,13 +59,15 @@ public class Song implements Serializable {
         this.duration = duration;
     }
 
-    public Integer getRhythm() {
-        return rhythm;
+    public Integer getBpm() {
+        return bpm;
     }
 
-    public void setRhythm(Integer rhythm) {
-        this.rhythm = rhythm;
+    public void setBpm(Integer bpm) {
+        this.bpm = bpm;
     }
+
+    
 
     public Genre getGenre() {
         return genre;

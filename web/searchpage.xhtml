@@ -11,46 +11,63 @@
             <ui:define name = "content">
                 <h:form id="search_form">
                     <div class="search-title"><h2>Search for songs</h2></div>                    
-                    <div class="input-group search-form" >
-                        <h:inputText class="form-control" a:placeholder="Song name, artists, album, genre" value="#{searchsongs.searchQuery}" id="searchQuery"/>
-                        <span class="input-group-btn">
-                            <h:commandButton class="btn btn-info" value="go" action="#{searchsongs.submit()}" />
-                        </span>                    
+                    <div class="row search-form" >
+                        <h:inputText class="form-control" a:placeholder="Song name, artists, album, genre" value="#{searchsongs.searchQuery}" id="searchQuery"/>                        
                     </div>
-                    <div class="row input-group search-form" >
-                        <h:inputText class="form-control" a:placeholder="BPM" id="bpm" value="#{searchsongs.bpm}" />
-                    </div>
+                    <div class="row form-group search-form" >                      
+                        <div class="col-sm-6">
+                            <h:inputText class="form-control" a:placeholder="BPM" id="bpm" value="#{searchsongs.bpm}" />
+                        </div>
 
-                    <div class="row">
+                        <label class="col-sm-1">Range:</label>
+                        <div class="col-sm-2">
+                            <h:inputText style="width:70px" a:type="number" class="form-control" value="#{searchsongs.range}" />
+                        </div>
+
+                    </div>
+                    <div class="row search-form">
+                        <h:commandButton id="goButton" class="col-xs-12 btn btn-info" value="go" action="#{searchsongs.submit()}" disabled="false" />
+                    </div>
+                    <div class="row search-form">
                         <ol>
-                            <li>Click on "Start Tapping" to start recording the rhythm.</li>
-                            <li>Use any key for tapping the rhythm.</li>                     
+                            <h4>You can specify the bpm interactivly by following these instructions.</h4>
+                            <li>Click on "Start Tapping" to start recording the rhythmn.</li>
+                            <li>Use any key for tapping the rhythmn.</li> 
+                            <li>You have 10 seconds to enter your rhythmn.</li>                     
                         </ol>
                     </div>
                     <div class="container">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <button id="startTapButton" type="button" class="btn btn-info" onclick="startRecordingBPM();">Start Tapping</button>
                             </div>
-                            <div class="col-xs-3">
-                                <div id="circle" class="offline"></div>
+                            <div class="col-xs-1">
+                                <div id="circle" class="offline" style="display:none"></div>
                             </div>
                             <div class="col-xs-3">
-                                <progress value="0" max="10" id="progressBar"></progress>
-                            </div>
-                            <div class="col-xs-3">
-
+                                <progress value="0" max="10" id="progressBar" style="display:none"></progress>
                             </div>
                         </div>
                     </div>
 
                     <script>
                         /* <![CDATA[ */
+                        $("[id='search_form:goButton'").prop('disabled', true);
+
+                        $("[id='search_form:bpm'").on('keyup blur', function () {
+                            $("[id='search_form:goButton'").prop('disabled', this.value.trim().length == 0);
+                        });
+                        
+                        $("[id='search_form:searchQuery'").on('keyup blur', function () {
+                            $("[id='search_form:goButton'").prop('disabled', this.value.trim().length == 0);
+                        });
                         var startTime;
                         var endTime;
                         var tapsTimeStamps = [];
                         function startRecordingBPM() {
                             $("[id='search_form:bpm']").prop('disabled', true);
+                            $("#circle").show();
+                            $("#progressBar").show();
                             $('#startTapButton').prop('disabled', true);
                             startTime = Date();
                             document.body.addEventListener('keydown', function (e) {
@@ -74,7 +91,8 @@
 
                         function BPMRecordingFinished() {
                             endTime = Date();
-                            var taps = "";
+                            $("#circle").hide();
+                            $("#progressBar").hide();
                             var tapIntervals = [];
                             var total = 0;
                             for (var i = 0; i < tapsTimeStamps.length - 1; i++) {
