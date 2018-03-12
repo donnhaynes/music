@@ -22,9 +22,8 @@ public class MusicRhythmDAO {
     private EntityManager em;
 
     public MusicRhythmDAO() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MusicRythmPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MusicRhythmPU");
         em = emf.createEntityManager();
-        //dfsjkasdjkl
     }
 
     public void saveUser(User user) {

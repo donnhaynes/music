@@ -32,11 +32,56 @@ public class Artist implements Serializable {
     private String nationality;    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date born;
-    @ManyToMany(mappedBy = "creators")
+    
+    
+    @ManyToMany()
     private List<Song> songsCreated;
     private String mbid;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public Date getBorn() {
+        return born;
+    }
+
+    public void setBorn(Date born) {
+        this.born = born;
+    }
+
+    public List<Song> getSongsCreated() {
+        return songsCreated;
+    }
+
+    public void setSongsCreated(List<Song> songsCreated) {
+        this.songsCreated = songsCreated;
+    }
+
+    public String getMbid() {
+        return mbid;
+    }
+
+    public void setMbid(String mbid) {
+        this.mbid = mbid;
+    }
     
 
+    
+    
+    
     public Long getId() {
         return id;
     }
@@ -69,8 +114,5 @@ public class Artist implements Serializable {
     public String toString() {
         return "uk.co.queenmaryuniversity.musicrythm.model.Artist[ id=" + id + " ]";
     }
-    
-    public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MusicRythmPU");
-    }
+        
 }

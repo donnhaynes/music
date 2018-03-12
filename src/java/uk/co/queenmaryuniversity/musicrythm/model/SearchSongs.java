@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 
 /**
  *

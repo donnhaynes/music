@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.io.Serializable;
@@ -30,4 +25,44 @@ public class Album implements Serializable {
     private Date releaseData;    
     private List<Song> songs;
     private List<Artist> creators;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getReleaseData() {
+        return releaseData;
+    }
+
+    public void setReleaseData(Date releaseData) {
+        this.releaseData = releaseData;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
+    public List<Artist> getCreators() {
+        return creators;
+    }
+
+    public void setCreators(List<Artist> creators) {
+        this.creators = creators;
+    }
 }

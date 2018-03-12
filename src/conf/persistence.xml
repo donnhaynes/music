@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="MusicRythmPU" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>uk.co.queenmaryuniversity.musicrythm.model.Artist</class>
-    <class>uk.co.queenmaryuniversity.musicrythm.model.Song</class>
-    <class>uk.co.queenmaryuniversity.musicrythm.model.Album</class>
-    <class>uk.co.queenmaryuniversity.musicrythm.model.Genre</class>
-    <class>uk.co.queenmaryuniversity.musicrythm.model.PlayList</class>
-    <class>uk.co.queenmaryuniversity.musicrythm.model.User</class>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+  <persistence-unit name="MusicRhythmPU" transaction-type="JTA">
+    <jta-data-source>java:app/jdbc/musicrythmn</jta-data-source>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/musicrhytmn?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.user" value="musicrhytmn"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="musicrhytmn"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
-      <property name="eclipselink.logging.level" value="FINE"/>
     </properties>
   </persistence-unit>
 </persistence>

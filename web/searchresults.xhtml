@@ -21,10 +21,10 @@
                         <ui:repeat value="#{searchsongs.songs}" var="song">
                             <tr>
                                 <td>#{song.name}</td>
-                                <td>a</td>
-                                <td>a</td>
-                                <td>#{song.duration}</td>
-                                <td>a</td>
+                                <td><h:panelGroup rendered="#{not empty song.albums}">#{song.albums[0].name}</h:panelGroup></td>
+                                <td><h:panelGroup rendered="#{not empty song.creators}">#{song.creators[0].name}</h:panelGroup></td>
+                                <td>1998</td>
+                                <td>#{song.genre.name}</td>
                                 <td>#{song.bpm}</td>
                             </tr>
                         </ui:repeat>  

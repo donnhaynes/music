@@ -1,22 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
-/**
- *
- * @author Don
- */
 @Entity
 public class Song implements Serializable {
 
@@ -27,12 +21,14 @@ public class Song implements Serializable {
     private String name;
     private Long duration;
     private Integer bpm;
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Genre genre;
     
-    @ManyToMany
-    private List<Artist> creators; 
+    @ManyToMany(mappedBy = "songsCreated",cascade = CascadeType.PERSIST )
+    private List<Artist> creators=new ArrayList<>(); 
     
-    
+    @ManyToMany(mappedBy = "songs",cascade = CascadeType.PERSIST )
+    private List<Album> albums=new ArrayList<>(); 
     
     
     public Long getId() {
@@ -85,6 +81,18 @@ public class Song implements Serializable {
         this.creators = creators;
     }
 
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
+
+    
+    
+    
+
     
     
     @Override
@@ -111,5 +119,4 @@ public class Song implements Serializable {
     public String toString() {
         return "uk.co.queenmaryuniversity.musicrythm.model.Song[ id=" + id + " ]";
     }
-    
 }
