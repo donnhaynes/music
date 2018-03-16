@@ -11,22 +11,24 @@
             <ui:define name = "content">
                 <h:form id="search_form">
                     <div class="search-title"><h2>Search for songs</h2></div>                    
-                    <div class="row search-form" >
-                        <h:inputText class="form-control" a:placeholder="Song name, artists, album, genre" value="#{searchsongs.searchQuery}" id="searchQuery"/>                        
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h:inputText class="form-control" a:placeholder="Song name, artists, album, genre" value="#{searchsongs.searchQuery}" id="searchQuery"/>                        
+                        </div>
                     </div>
-                    <div class="row form-group search-form" >                      
+                    <div class="row form-group" style="margin-top: 15px">                      
                         <div class="col-sm-6">
                             <h:inputText class="form-control" a:placeholder="BPM" id="bpm" value="#{searchsongs.bpm}" />
                         </div>
-
-                        <label class="col-sm-1">Range:</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-1" style="padding-top: 10px;text-align: right;">Range:</label>
+                        <div class="col-sm-2">                            
                             <h:inputText style="width:70px" a:type="number" class="form-control" value="#{searchsongs.range}" />
                         </div>
-
                     </div>
-                    <div class="row search-form">
-                        <h:commandButton id="goButton" class="col-xs-12 btn btn-info" value="go" action="#{searchsongs.submit()}" disabled="false" />
+                    <div class="row" style="margin-top: 15px">
+                        <div class="col-sm-12">
+                            <h:commandButton id="goButton" class="col-sm-12 btn btn-info" value="go" action="#{searchsongs.submit()}" disabled="false" />
+                        </div>
                     </div>
                     <div class="row search-form">
                         <ol>
@@ -36,19 +38,19 @@
                             <li>You have 10 seconds to enter your rhythmn.</li>                     
                         </ol>
                     </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <button id="startTapButton" type="button" class="btn btn-info" onclick="startRecordingBPM();">Start Tapping</button>
-                            </div>
-                            <div class="col-xs-1">
-                                <div id="circle" class="offline" style="display:none"></div>
-                            </div>
-                            <div class="col-xs-3">
-                                <progress value="0" max="10" id="progressBar" style="display:none"></progress>
-                            </div>
+
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <button id="startTapButton" type="button" class="btn btn-info" onclick="startRecordingBPM();">Start Tapping</button>
+                        </div>
+                        <div class="col-xs-1">
+                            <div id="circle" class="offline" style="display:none"></div>
+                        </div>
+                        <div class="col-xs-3">
+                            <progress value="0" max="10" id="progressBar" style="display:none"></progress>
                         </div>
                     </div>
+
 
                     <script>
                         /* <![CDATA[ */
@@ -57,7 +59,7 @@
                         $("[id='search_form:bpm'").on('keyup blur', function () {
                             $("[id='search_form:goButton'").prop('disabled', this.value.trim().length == 0);
                         });
-                        
+
                         $("[id='search_form:searchQuery'").on('keyup blur', function () {
                             $("[id='search_form:goButton'").prop('disabled', this.value.trim().length == 0);
                         });
@@ -104,13 +106,11 @@
                             $('#startTapButton').prop('disabled', false);
                             $("[id='search_form:bpm']").val(Math.trunc(bpm));
                             $("[id='search_form:bpm']").prop('disabled', false);
-                            $("[id='search_form:goButton'").prop('disabled',false);
+                            $("[id='search_form:goButton'").prop('disabled', false);
                         }
                         /* ]]> */
                     </script>
                 </h:form>
-
-
             </ui:define>            
         </ui:composition>
     </h:body>

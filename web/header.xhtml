@@ -16,17 +16,16 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>                        
                         <li><a href="searchpage.xhtml">Search Song</a></li>
-                        <h:panelGroup rendered="#{login.isLoggedIn}"><li><a href="#">Browse Playlists</a></li></h:panelGroup>
+                        <h:panelGroup rendered="#{login.isLoggedIn}"><li><a href="playlists.xhtml">Browse Playlists</a></li></h:panelGroup>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <h:panelGroup rendered="#{!login.isLoggedIn}"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a></h:panelGroup>
-                            <h:panelGroup rendered="#{login.isLoggedIn}"><h:form><h:commandLink action="#{login.logout()}" class="dropdown-toggle"><b>Logout</b></h:commandLink></h:form></h:panelGroup>
-                            <ul id="login-dp" class="dropdown-menu">
+                            <h:panelGroup rendered="#{login.isLoggedIn}"><h:form style="min-height: 50px;"><h:commandLink action="#{login.logout()}" class="dropdown-toggle" style="color: #fff;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-size: 14px;line-height: 20px;padding: 15px;"><b>Logout</b></h:commandLink></h:form></h:panelGroup>
+                            <ul id="login-dp" class="dropdown-menu" style="min-width: 200px">
                                 <li>
                                     <div class="row">
-                                        <div class="col-md-16">
-
+                                        <div class="col-md-12" style="padding:  15px">
                                             <h:form rendered="#{!login.isLoggedIn}">
                                                 <div class="form-group">
                                                     <label class="sr-only" for="exampleInputEmail2">Email address</label>
@@ -54,7 +53,6 @@
                                 </li>
                             </ul>
                         </li>
-
                     </ul>
                 </div>
             </div>

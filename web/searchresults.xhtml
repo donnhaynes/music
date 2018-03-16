@@ -2,34 +2,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">    
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">    
     <h:body>        
         <ui:composition template="common.xhtml">            
             <ui:define name = "content">
-                <table class="table" id="table">
-                    <thead>
-                        <tr>
-                            <th>Song Name</th>
-                            <th>Artists</th>
-                            <th>Album</th>
-                            <th>Year Published</th>
-                            <th>Genre</th>
-                            <th>BPM</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ui:repeat value="#{searchsongs.songs}" var="song">
-                            <tr>
-                                <td>#{song.name}</td>
-                                <td><h:panelGroup rendered="#{not empty song.albums}">#{song.albums[0].name}</h:panelGroup></td>
-                                <td><h:panelGroup rendered="#{not empty song.creators}">#{song.creators[0].name}</h:panelGroup></td>
-                                <td>1998</td>
-                                <td>#{song.genre.name}</td>
-                                <td>#{song.bpm}</td>
-                            </tr>
-                        </ui:repeat>  
-                    </tbody>
-                </table>
+                <p:dataTable var="song" value="#{songsLazyView.lazyModel}" paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="10,20,30" id="songsTable" lazy="true">                    
+                    <p:column headerText="Name">
+                        <h:outputText value="#{song.name}" />
+                    </p:column>
+                    <p:column headerText="Album">
+                        <h:outputText value="#{song.albums[0].name}"  rendered="#{not empty song.albums}"/>
+                    </p:column>
+                    <p:column headerText="Artist">
+                        <h:outputText value="#{song.creators[0].name}" rendered="#{not empty song.creators}"/>
+                    </p:column>
+                    <p:column headerText="Year" >
+                        <h:outputText value="1988" />
+                    </p:column>
+                    <p:column headerText="Genre">
+                        <h:outputText value="#{song.genre.name}" />
+                    </p:column>
+                    <p:column headerText="BPM">
+                        <h:outputText value="#{song.bpm}" />
+                    </p:column>
+                    
+                     
+                </p:dataTable>               
             </ui:define>            
         </ui:composition>
     </h:body>

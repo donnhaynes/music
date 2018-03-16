@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">    
+    <h:body>        
+        <ui:composition template="common.xhtml">            
+            <ui:define name = "content">
+                <div class='row'>
+                    <div class="col-sm-3">
+                        <p:dataTable var="playlist" value="#{playlistsLazyView.lazyModel}" paginator="true" rows="10"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="10,20,30" id="playlistsTable" lazy="true">                    
+                            <p:column headerText="Name">
+                                <h:outputText value="#{playlist.name}" />
+                            </p:column>
+                            <p:column headerText="Songs">
+                                <h:outputText value="#{playlist.songs.size}"  rendered="#{not empty playlist.songs}"/>
+                            </p:column>                            
+                        </p:dataTable>   
+                    </div>
+                    <div class="col-sm-3">
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty dtLazyView.selectedCar}" columnClasses="label,value">
+                                <!--                        <f:facet name="header">
+                                                            <p:graphicImage name="demo/images/car/#{dtLazyView.selectedCar.brand}-big.gif"/> 
+                                                        </f:facet>-->
+
+                                <h:outputText value="Id:" />
+                                <h:outputText value="#{dtLazyView.selectedCar.id}" />
+
+                                <h:outputText value="Year" />
+                                <h:outputText value="#{dtLazyView.selectedCar.year}" />
+
+                                <h:outputText value="Color:" />
+                                <h:outputText value="#{dtLazyView.selectedCar.color}" style="color:#{dtLazyView.selectedCar.color}"/>
+
+                                <h:outputText value="Price:" />
+                                <h:outputText value="#{dtLazyView.selectedCar.price}">
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </div>
+                </div>
+            </ui:define>            
+        </ui:composition>
+    </h:body>
+</html>

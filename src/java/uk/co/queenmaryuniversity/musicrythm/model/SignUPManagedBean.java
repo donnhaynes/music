@@ -30,17 +30,10 @@ public class SignUPManagedBean {
         user = new User();
     }
 
-    public void submit() {
-        
+    public String submit() {
         MusicRhythmDAO dao = new MusicRhythmDAO();
-        dao.saveUser(user);
-        try {
-            FacesContext.getCurrentInstance().
-                    getExternalContext().dispatch("signupsuccessful.xhtml");
-        } catch (IOException ex) {
-            Logger.getLogger(SignUPManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        dao.saveUser(user);        
+        return "signupsuccesful";
     }
 
     public String getConfirmPassword() {

@@ -8,6 +8,7 @@ package uk.co.queenmaryuniversity.musicrythm.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
