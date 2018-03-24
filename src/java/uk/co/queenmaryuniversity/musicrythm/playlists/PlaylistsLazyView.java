@@ -5,7 +5,6 @@
  */
 package uk.co.queenmaryuniversity.musicrythm.playlists;
 
-import uk.co.queenmaryuniversity.musicrythm.views.playlists.*;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -16,31 +15,50 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
-import uk.co.queenmaryuniversity.musicrythm.model.MusicRhythmDAO;
+import uk.co.queenmaryuniversity.musicrythm.model.LoginBean;
 import uk.co.queenmaryuniversity.musicrythm.model.PlayList;
  
 @ManagedBean(name="playlistsLazyView")
 @ViewScoped
 public class PlaylistsLazyView implements Serializable {             
-    private LazyDataModel<Playlist> lazyModel;     
-    private Playlist selectedPlaylist;
-    
+    private LazyDataModel<PlayList> lazyModel;     
+    private PlayList selectedPlaylist;
+    @ManagedProperty(value="#{login}")
+    private LoginBean  loginBean; 
     
      
     @PostConstruct
     public void init() { 
-        MusicRhythmDAO dao = new MusicRhythmDAO();
-     //   List<Playlist> playlists = dao.findPlaylistsByQuery(searchQuery,bpm,range);
+        final List<PlayList> playlists = loginBean.getUser().getPlaylists();        
         lazyModel = new LazyPlaylistDataModel(playlists);
     }
  
-    public LazyDataModel<Playlist> getLazyModel() {
+    public LazyDataModel<PlayList> getLazyModel() {
         return lazyModel;
     }
  
     public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Playlist Selected", ((Playlist) event.getObject()).getName());
+        FacesMessage msg = new FacesMessage("Playlist Selected", ""+((PlayList) event.getObject()).getId());
         FacesContext.getCurrentInstance().addMessage(null, msg);
-    }    
+    }       
+
+    public LoginBean getLoginBean() {
+        return loginBean;
+    }
+
+    public void setLoginBean(LoginBean loginBean) {
+        this.loginBean = loginBean;
+    }
+
+    public PlayList getSelectedPlaylist() {
+        return selectedPlaylist;
+    }
+
+    public void setSelectedPlaylist(PlayList selectedPlaylist) {
+        this.selectedPlaylist = selectedPlaylist;
+    }
+    
+    
+    
     
 }

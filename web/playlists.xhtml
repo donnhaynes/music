@@ -8,43 +8,33 @@
     <h:body>        
         <ui:composition template="common.xhtml">            
             <ui:define name = "content">
-                <div class='row'>
-                    <div class="col-sm-3">
-                        <p:dataTable var="playlist" value="#{playlistsLazyView.lazyModel}" paginator="true" rows="10"
-                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                     rowsPerPageTemplate="10,20,30" id="playlistsTable" lazy="true">                    
-                            <p:column headerText="Name">
-                                <h:outputText value="#{playlist.name}" />
-                            </p:column>
-                            <p:column headerText="Songs">
-                                <h:outputText value="#{playlist.songs.size}"  rendered="#{not empty playlist.songs}"/>
-                            </p:column>                            
-                        </p:dataTable>   
+                <h:form id="form">
+                    <div class='row'>
+                        <div class="col-sm-3">
+                            <p:dataTable var="playlist" value="#{playlistsLazyView.lazyModel}" paginator="true" rows="10"
+                                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                         rowsPerPageTemplate="10,20,30" selectionMode="single" selection="#{playlistsLazyView.selectedPlaylist}" id="playlistsTable" lazy="true">       
+                                <p:ajax event="rowSelect" listener="#{playlistsLazyView.onRowSelect}" update=":form:playlistDetail"/>
+                                <p:column headerText="Name">
+                                    <h:outputText value="#{playlist.name}" />
+                                </p:column>
+                                <p:column headerText="Songs">
+                                    <h:outputText value="#{playlist.songs.size()}"/>
+                                </p:column>                            
+                            </p:dataTable>   
+                        </div>
+                        <div class="col-sm-3">
+                            <p:outputPanel id="playlistDetail">
+                                <h2>  <h:outputText value="#{playlistsLazyView.selectedPlaylist.name}" /></h2>
+                                <ul>
+                                    <ui:repeat var="song" value="#{playlistsLazyView.selectedPlaylist.songs}" varStatus="status">                               
+                                        <li><h:outputText value="#{song.name}"/></li>
+                                    </ui:repeat>
+                                </ul>
+                            </p:outputPanel>
+                        </div>
                     </div>
-                    <div class="col-sm-3">
-                        <p:outputPanel id="carDetail" style="text-align:center;">
-                            <p:panelGrid  columns="2" rendered="#{not empty dtLazyView.selectedCar}" columnClasses="label,value">
-                                <!--                        <f:facet name="header">
-                                                            <p:graphicImage name="demo/images/car/#{dtLazyView.selectedCar.brand}-big.gif"/> 
-                                                        </f:facet>-->
-
-                                <h:outputText value="Id:" />
-                                <h:outputText value="#{dtLazyView.selectedCar.id}" />
-
-                                <h:outputText value="Year" />
-                                <h:outputText value="#{dtLazyView.selectedCar.year}" />
-
-                                <h:outputText value="Color:" />
-                                <h:outputText value="#{dtLazyView.selectedCar.color}" style="color:#{dtLazyView.selectedCar.color}"/>
-
-                                <h:outputText value="Price:" />
-                                <h:outputText value="#{dtLazyView.selectedCar.price}">
-                                    <f:convertNumber type="currency" currencySymbol="$" />
-                                </h:outputText>
-                            </p:panelGrid>
-                        </p:outputPanel>
-                    </div>
-                </div>
+                </h:form>
             </ui:define>            
         </ui:composition>
     </h:body>

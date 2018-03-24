@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -25,7 +26,8 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String username;
-    private String password;
+    private String password;    
+    @OneToMany(mappedBy = "user")
     private List<PlayList> playlists;
 
     public Long getId() {

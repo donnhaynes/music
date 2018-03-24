@@ -3,10 +3,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">    
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">    
     <h:body>        
         <ui:composition template="common.xhtml">            
             <ui:define name = "content">
+
+                <p:dialog header="Add Song to playlist" widgetVar="dlg2" modal="true" width="750px"  position="400,400" onShow="PF('dlg2').initPosition()" appendTo="songsTable">                    
+                    <p:outputPanel id="addSongToPlaylist" style="text-align:center;">   
+                        <h:outputText value="#{songsLazyView.songToBeAddedToPlaylist.name}" />
+                        Select playlist:
+                        <h:form id="addToPlaylistForm">
+                            <p:growl id="growl" showDetail="true" sticky="false" />  
+                            <h:selectOneMenu id="playlist" value="#{songsLazyView.playlistId}" style="width:150px">                            
+                                <f:selectItem itemLabel="Select Playlist" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{login.user.playlists}" var="playlist"
+                                               itemLabel="#{playlist.name}" itemValue="#{playlist.id}"/>
+                            </h:selectOneMenu>
+                            <br></br>
+                            Or add it to a new playlist
+                            <h:inputText value="#{songsLazyView.newPlaylistName}"></h:inputText>
+                            <p:commandButton value="Add to playlist" update="growl" action="#{songsLazyView.submitAddToPlaylist}"  oncomplete="PF('dlg2').hide();" />
+                        </h:form>
+                    </p:outputPanel>
+
+                </p:dialog>  
                 <p:dataTable var="song" value="#{songsLazyView.lazyModel}" paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                              rowsPerPageTemplate="10,20,30" id="songsTable" lazy="true">                    
@@ -28,9 +49,14 @@
                     <p:column headerText="BPM">
                         <h:outputText value="#{song.bpm}" />
                     </p:column>
-                    
-                     
-                </p:dataTable>               
+                    <p:column rendered="#{login.isLoggedIn}">
+                        <p:commandButton value="Add to playlist" id="ajax" update=":addSongToPlaylist" actionListener="#{songsLazyView.addToPlaylist(song)}" styleClass="ui-priority-primary" onclick="PF('dlg2').show();"/>                            
+                    </p:column>
+                </p:dataTable>      
+
+
+
+
             </ui:define>            
         </ui:composition>
     </h:body>

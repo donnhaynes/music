@@ -33,8 +33,9 @@ public class MusicRhythmDAO {
     }
 
     public void savePlayList(PlayList playlist) {
-        // save the playlist in the database
-    }
+        em.getTransaction().begin();
+        em.persist(playlist);        
+        em.getTransaction().commit();    }
 
     public User login(String username, String password) {
         try {
@@ -80,5 +81,11 @@ public class MusicRhythmDAO {
              return songs.stream().filter(song -> ((bpm-range < song.getBpm()) && bpm+range > song.getBpm())).collect(Collectors.toList()); 
          }
          return songs;        
+    }
+
+    public void updatePlaylist(PlayList playlist) {
+        em.getTransaction().begin();
+        em.merge(playlist);
+        em.getTransaction().commit();
     }
 }

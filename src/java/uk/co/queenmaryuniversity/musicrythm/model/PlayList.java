@@ -6,11 +6,14 @@
 package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -23,8 +26,10 @@ public class PlayList implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @ManyToOne
     private User user;
-    private List<Song> songs;
+    @ManyToMany
+    private List<Song> songs=new ArrayList<>();
 
     public Long getId() {
         return id;

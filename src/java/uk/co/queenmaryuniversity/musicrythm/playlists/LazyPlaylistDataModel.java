@@ -14,7 +14,6 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import uk.co.queenmaryuniversity.musicrythm.model.PlayList;
-import uk.co.queenmaryuniversity.musicrythm.model.Song;
 
  
 /**
@@ -29,9 +28,11 @@ public class LazyPlaylistDataModel extends LazyDataModel<PlayList> {
     }
      
     @Override
-    public Playlist getRowData(String rowKey) {
-        for(Playlist playlist : datasource) {       
+    public PlayList getRowData(String rowKey) {
+        for(PlayList playlist : datasource) {    
+            if(playlist.getId().equals(Long.parseLong(rowKey))){
                 return playlist;
+            }
         }
  
         return null;

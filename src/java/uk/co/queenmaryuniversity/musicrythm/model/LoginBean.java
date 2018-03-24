@@ -7,7 +7,6 @@ package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.io.Serializable;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 
 /**
@@ -33,7 +32,7 @@ public class LoginBean implements Serializable{
 
     public void submit(){
         MusicRhythmDAO dao = new MusicRhythmDAO();
-        this.user = dao.login(username, password);
+        this.user = dao.login(username, password);        
         if (user == null){
             
         }else{
@@ -77,9 +76,14 @@ public class LoginBean implements Serializable{
     public void setIsLoggedIn(Boolean isLoggedIn) {
         this.isLoggedIn = isLoggedIn;
     }
-    
-    
-    
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     
     
     
