@@ -39,7 +39,7 @@ public class MusicRhythmDAO {
 
     public User login(String username, String password) {
         try {
-            Query query = em.createQuery("Select u from User u where u.username = :username OR u.email = :username AND u.password = :password ");
+            Query query = em.createQuery("Select u from User u where (u.username = :username OR u.email = :username) AND u.password = :password ");
             query.setParameter("username", username);
             query.setParameter("password", password);
             return (User) query.getSingleResult();
@@ -87,5 +87,13 @@ public class MusicRhythmDAO {
         em.getTransaction().begin();
         em.merge(playlist);
         em.getTransaction().commit();
+    }
+
+    public void deletePlaylist(PlayList playList) {
+        em.getTransaction().begin();
+        playList=em.merge(playList);
+        em.remove(playList);
+        em.getTransaction().commit();
+
     }
 }

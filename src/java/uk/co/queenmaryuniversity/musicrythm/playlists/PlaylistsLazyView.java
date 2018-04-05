@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import uk.co.queenmaryuniversity.musicrythm.model.LoginBean;
+import uk.co.queenmaryuniversity.musicrythm.model.MusicRhythmDAO;
 import uk.co.queenmaryuniversity.musicrythm.model.PlayList;
  
 @ManagedBean(name="playlistsLazyView")
@@ -29,6 +30,7 @@ public class PlaylistsLazyView implements Serializable {
      
     @PostConstruct
     public void init() { 
+        System.out.println("post construct");
         final List<PlayList> playlists = loginBean.getUser().getPlaylists();        
         lazyModel = new LazyPlaylistDataModel(playlists);
     }
@@ -56,6 +58,14 @@ public class PlaylistsLazyView implements Serializable {
 
     public void setSelectedPlaylist(PlayList selectedPlaylist) {
         this.selectedPlaylist = selectedPlaylist;
+    }
+    
+    
+    public void deletePlaylist(PlayList playlist) {
+        MusicRhythmDAO musicRhythmDAO = new MusicRhythmDAO();
+        musicRhythmDAO.deletePlaylist(playlist);
+        init();
+        
     }
     
     

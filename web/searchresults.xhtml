@@ -8,7 +8,7 @@
     <h:body>        
         <ui:composition template="common.xhtml">            
             <ui:define name = "content">
-
+                <h2> Search results: </h2>
                 <p:dialog header="Add Song to playlist" widgetVar="dlg2" modal="true" width="750px"  position="400,400" onShow="PF('dlg2').initPosition()" appendTo="songsTable">                    
                     <p:outputPanel id="addSongToPlaylist" style="text-align:center;">   
                         <h:outputText value="#{songsLazyView.songToBeAddedToPlaylist.name}" />
@@ -29,8 +29,10 @@
 
                 </p:dialog>  
                 <p:dataTable var="song" value="#{songsLazyView.lazyModel}" paginator="true" rows="10"
+                             paginatorPosition="bottom"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                             rowsPerPageTemplate="10,20,30" id="songsTable" lazy="true">                    
+                             rowsPerPageTemplate="10,20,30" id="songsTable" lazy="true"
+                             style="margin-top: 20px">                    
                     <p:column headerText="Name">
                         <h:outputText value="#{song.name}" />
                     </p:column>

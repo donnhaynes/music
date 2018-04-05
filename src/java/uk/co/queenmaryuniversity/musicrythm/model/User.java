@@ -27,7 +27,7 @@ public class User implements Serializable {
     private String email;
     private String username;
     private String password;    
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval=true)
     private List<PlayList> playlists;
 
     public Long getId() {

@@ -1,6 +1,7 @@
 <span xmlns = "http://www.w3.org/1999/xhtml"   
       xmlns:ui = "http://java.sun.com/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -14,30 +15,35 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>                        
-                        <li><a href="searchpage.xhtml">Search Song</a></li>
-                        <h:panelGroup rendered="#{login.isLoggedIn}"><li><a href="playlists.xhtml">Browse Playlists</a></li></h:panelGroup>
+                        <li class="#{view.viewId eq '/index.xhtml' ? 'active' : ''}"><a href="index.xhtml">Home</a></li>                        
+                        <li class="#{view.viewId eq '/searchpage.xhtml' or view.viewId eq '/searchresults.xhtml'? 'active' : ''}"><a href="searchpage.xhtml">Search Song</a></li>
+                        <h:panelGroup rendered="#{login.isLoggedIn}"><li class="#{view.viewId eq '/playlists.xhtml' ? 'active' : ''}"><a href="playlists.xhtml">Browse Playlists</a></li></h:panelGroup>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <h:panelGroup rendered="#{!login.isLoggedIn}"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a></h:panelGroup>
-                            <h:panelGroup rendered="#{login.isLoggedIn}"><h:form style="min-height: 50px;"><h:commandLink action="#{login.logout()}" class="dropdown-toggle" style="color: #fff;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-size: 14px;line-height: 20px;padding: 15px;"><b>Logout</b></h:commandLink></h:form></h:panelGroup>
+                            <h:panelGroup rendered="#{login.isLoggedIn}"><h:form style="min-height: 50px;"><h:commandLink action="#{login.logout()}" class="dropdown-toggle" style="vertical-align:middle ;color: #fff;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-size: 14px;line-height: 20px;padding: 15px;"><b>Logout</b></h:commandLink></h:form></h:panelGroup>
                             <ul id="login-dp" class="dropdown-menu" style="min-width: 200px">
                                 <li>
                                     <div class="row">
                                         <div class="col-md-12" style="padding:  15px">
-                                            <h:form rendered="#{!login.isLoggedIn}">
+                                            <h:form id="loginForm" rendered="#{!login.isLoggedIn}">
                                                 <div class="form-group">
                                                     <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                    <h:inputText class="form-control" id="exampleInputEmail2" placeholder="Email address" value="#{login.username}" required="true"/>
+                                                    <h:inputText class="form-control" id="exampleInputEmail2" placeholder="Email address" value="#{login.username}" required="true" requiredMessage="email or username required"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                                    <h:inputSecret class="form-control" id="exampleInputPassword2" placeholder="Password" value="#{login.password}" required="true"/>
+                                                    <h:inputSecret id="passfield" class="form-control"  placeholder="Password" value="#{login.password}" required="true" requiredMessage="Password required."/>
+                                                    <h:message for="passfield" style="color:red"/>
                                                     <div class="help-block text-right"><a href="">Forget the password ?</a></div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <h:commandButton value="Sign in" class="btn btn-primary btn-block" action="#{login.submit()}"/>
+                                                    <h:commandButton id="signInButton" value="Sign in" class="btn btn-primary btn-block" action="#{login.submit()}"                                                                     
+                                                                     binding="#{login.signInbutton}">
+                                                        <f:ajax execute="@form" render="@form" />
+                                                    </h:commandButton>
+                                                    <h:message for="signInButton" style="color:red"/>
                                                 </div>
                                                 <div class="checkbox">
                                                     <label>
@@ -47,7 +53,7 @@
                                             </h:form>
                                         </div>
                                         <div class="bottom text-center">
-                                            New here ? <a href="#"><b>Join Us</b></a>
+                                            New here ? <a href="signuppage.xhtml"><b>Join Us</b></a>
                                         </div>
                                     </div>
                                 </li>
@@ -71,7 +77,7 @@
                     <img src="images/musicrythmn1.jpg" alt="Image">
                         <div class="carousel-caption">
                             <h4>Stream music through rhythm search, do not worry <br/> if you do not know the song name or artist </h4>
-                            <button type="button" class="btn btn-info">Sign Up</button>
+                            <a href="signuppage.xhtml"><button type="button" class="btn btn-info">Sign Up</button></a>
                             <br/><br/>
                         </div>      
                     </img>

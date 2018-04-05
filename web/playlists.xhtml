@@ -8,10 +8,11 @@
     <h:body>        
         <ui:composition template="common.xhtml">            
             <ui:define name = "content">
-                <h:form id="form">
+                <h:form id="form" style="margin-top: 25px">
                     <div class='row'>
                         <div class="col-sm-3">
                             <p:dataTable var="playlist" value="#{playlistsLazyView.lazyModel}" paginator="true" rows="10"
+                                         paginatorPosition="bottom"
                                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                          rowsPerPageTemplate="10,20,30" selectionMode="single" selection="#{playlistsLazyView.selectedPlaylist}" id="playlistsTable" lazy="true">       
                                 <p:ajax event="rowSelect" listener="#{playlistsLazyView.onRowSelect}" update=":form:playlistDetail"/>
@@ -20,7 +21,10 @@
                                 </p:column>
                                 <p:column headerText="Songs">
                                     <h:outputText value="#{playlist.songs.size()}"/>
-                                </p:column>                            
+                                </p:column>   
+                                <p:column>
+                                    <p:commandButton value="Delete" id="ajax" update=":form" actionListener="#{playlistsLazyView.deletePlaylist(playlist)}" styleClass="ui-priority-primary" onclick="PF('dlg2').show();"/>                            
+                                </p:column>
                             </p:dataTable>   
                         </div>
                         <div class="col-sm-3">

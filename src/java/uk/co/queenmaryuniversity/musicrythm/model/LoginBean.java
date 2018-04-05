@@ -8,6 +8,9 @@ package uk.co.queenmaryuniversity.musicrythm.model;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -21,6 +24,7 @@ public class LoginBean implements Serializable{
     private Boolean rememberMe;
     private Boolean isLoggedIn = false;
     private User user;
+    private UIComponent signInbutton;
 
     
     
@@ -34,8 +38,13 @@ public class LoginBean implements Serializable{
         MusicRhythmDAO dao = new MusicRhythmDAO();
         this.user = dao.login(username, password);        
         if (user == null){
-            
+            System.out.println("invalid credentials");
+            // invalid
+            FacesMessage message = new FacesMessage("Invalid credentials");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(signInbutton.getClientId(context), message);        
         }else{
+            System.out.println("login succesful");
             isLoggedIn = true;
         }
     }
@@ -84,6 +93,15 @@ public class LoginBean implements Serializable{
     public void setUser(User user) {
         this.user = user;
     }
+
+    public UIComponent getSignInbutton() {
+        return signInbutton;
+    }
+
+    public void setSignInbutton(UIComponent signInbutton) {
+        this.signInbutton = signInbutton;
+    }
+    
     
     
     
