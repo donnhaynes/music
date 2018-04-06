@@ -6,6 +6,7 @@
 package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -19,6 +20,8 @@ import javax.faces.context.FacesContext;
 @Named(value = "login")
 @SessionScoped
 public class LoginBean implements Serializable{
+    @EJB
+    private MusicRhythmDAO dao;
     private String username;
     private String password;
     private Boolean rememberMe;
@@ -35,7 +38,6 @@ public class LoginBean implements Serializable{
     }
 
     public void submit(){
-        MusicRhythmDAO dao = new MusicRhythmDAO();
         this.user = dao.login(username, password);        
         if (user == null){
             System.out.println("invalid credentials");

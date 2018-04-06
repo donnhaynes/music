@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -27,39 +28,39 @@ import uk.co.queenmaryuniversity.musicrythm.model.PlayList;
 import uk.co.queenmaryuniversity.musicrythm.model.SearchSongs;
 import uk.co.queenmaryuniversity.musicrythm.model.Song;
 import uk.co.queenmaryuniversity.musicrythm.model.User;
- 
-@ManagedBean(name="songsLazyView")
+
+@ManagedBean(name = "songsLazyView")
 @ViewScoped
-public class SongsLazyView implements Serializable {     
-    @ManagedProperty(value="#{searchsongs}")
-    private SearchSongs  searchSongs;
-    
-    @ManagedProperty(value="#{login}")
+public class SongsLazyView implements Serializable {
+
+    @EJB
+    private MusicRhythmDAO dao;
+    @ManagedProperty(value = "#{searchsongs}")
+    private SearchSongs searchSongs;
+
+    @ManagedProperty(value = "#{login}")
     private LoginBean loginBean;
-    private LazyDataModel<Song> lazyModel;     
+    private LazyDataModel<Song> lazyModel;
     private Song songToBeAddedToPlaylist;
     private String searchQuery;
     private Integer bpm;
-    private Integer range=10;   
+    private Integer range = 10;
     private String playlistId;
     private String newPlaylistName;
-   
-    
-     
+
     @PostConstruct
-    public void init() { 
-        this.searchQuery=searchSongs.getSearchQuery();
-        this.bpm=searchSongs.getBpm();
-        this.range=searchSongs.getRange();
-        MusicRhythmDAO dao = new MusicRhythmDAO();
-        List<Song> songs = dao.findSongsByQuery(searchQuery,bpm,range);
+    public void init() {
+        this.searchQuery = searchSongs.getSearchQuery();
+        this.bpm = searchSongs.getBpm();
+        this.range = searchSongs.getRange();
+        List<Song> songs = dao.findSongsByQuery(searchQuery, bpm, range);
         lazyModel = new LazySongDataModel(songs);
     }
- 
+
     public LazyDataModel<Song> getLazyModel() {
         return lazyModel;
     }
- 
+
     public void onRowSelect(SelectEvent event) {
         FacesMessage msg = new FacesMessage("Song Selected", ((Song) event.getObject()).getName());
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -72,9 +73,9 @@ public class SongsLazyView implements Serializable {
     public void setSearchSongs(SearchSongs searchSongs) {
         this.searchSongs = searchSongs;
     }
-    
-    public void addToPlaylist(Song song){
-        System.out.println("button clicked:"+song.getName());
+
+    public void addToPlaylist(Song song) {
+        System.out.println("button clicked:" + song.getName());
         setSongToBeAddedToPlaylist(song);
     }
 
@@ -94,8 +95,6 @@ public class SongsLazyView implements Serializable {
         this.playlistId = playlistId;
     }
 
-    
-    
     public String getNewPlaylistName() {
         return newPlaylistName;
     }
@@ -119,43 +118,38 @@ public class SongsLazyView implements Serializable {
     public void setLoginBean(LoginBean loginBean) {
         this.loginBean = loginBean;
     }
-    
-    
-    
-    
 
-    public void submitAddToPlaylist(){
+    public void submitAddToPlaylist() {
         System.out.println("submitAddToPlaylist");
-        MusicRhythmDAO dao = new MusicRhythmDAO();
-        if (this.newPlaylistName != null && !this.newPlaylistName.trim().isEmpty()){
-            PlayList newPlayList =  new PlayList();
+        if (this.newPlaylistName != null && !this.newPlaylistName.trim().isEmpty()) {
+            PlayList newPlayList = new PlayList();
             newPlayList.setName(this.newPlaylistName);
             newPlayList.getSongs().add(this.songToBeAddedToPlaylist);
             final User user = loginBean.getUser();
             newPlayList.setUser(user);
             dao.savePlayList(newPlayList);
-            user.getPlaylists().add(newPlayList); 
-            this.newPlaylistName=null;
-            this.playlistId=null;
-            this.songToBeAddedToPlaylist=null;
-            FacesContext context = FacesContext.getCurrentInstance();         
-            context.addMessage(null, new FacesMessage("Successful",  "Song added to playlist") );
-        }else{
-            System.out.println("playlist:"+playlistId);
+            user.getPlaylists().add(newPlayList);
+            this.newPlaylistName = null;
+            this.playlistId = null;
+            this.songToBeAddedToPlaylist = null;
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Successful", "Song added to playlist"));
+        } else {
+            System.out.println("playlist:" + playlistId);
             PlayList selectedPlaylist = null;
-            for (PlayList playlist:loginBean.getUser().getPlaylists()){
-                if ((""+playlist.getId()).equals(this.playlistId)){
+            for (PlayList playlist : loginBean.getUser().getPlaylists()) {
+                if (("" + playlist.getId()).equals(this.playlistId)) {
                     selectedPlaylist = playlist;
                 }
             }
-            selectedPlaylist.getSongs().add(songToBeAddedToPlaylist);            
+            selectedPlaylist.getSongs().add(songToBeAddedToPlaylist);
             dao.updatePlaylist(selectedPlaylist);
-            this.newPlaylistName=null;
-            this.playlistId=null;
-            this.songToBeAddedToPlaylist=null;
-            FacesContext context = FacesContext.getCurrentInstance();         
-            context.addMessage(null, new FacesMessage("Successful",  "Song added to playlist") );
-        }        
+            this.newPlaylistName = null;
+            this.playlistId = null;
+            this.songToBeAddedToPlaylist = null;
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Successful", "Song added to playlist"));
+        }
     }
-    
+
 }

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">    
+    <h:body>        
+        <ui:composition template="common.xhtml">            
+            <ui:define name = "content">
+                <div style="width: 90%; margin: 0 auto;">
+                    <hr class="featurette-divider"/>
+                    <div class="container text-center" >
+                        <h1> What features does the application have? </h1>
+                    </div>
+                    <hr class="featurette-divider"/>
+                    <div class="row featurette">
+                        <div class="col-sm-10">
+                            <h2 class="featurette-heading"><span class="text-muted">Normal Search</span></h2>
+                            <p class="lead">You can search for music normally, by entering the song name, artists, genre, or album. Once this is done all songs containing any information entered will be returned in a table.</p>
+                        </div>
+                        <div class="col-sm-2">
+                            <img class="featurette-image img-fluid mx-auto" src="images/songs_search.png" width="200dp" />
+                        </div>
+                    </div>
+                    <hr class="featurette-divider"/>
+                    <div class="row featurette">
+                        <div class="col-sm-3">
+                            <img class="featurette-image" src="images/metronome.png" width="200dp" />
+                        </div>
+                        <div class="col-sm-9">
+                            <h2 class="featurette-heading"> <span class="text-muted">Tempo Search</span></h2>
+                            <p class="lead">You can also search through tempo, using a songs bpm. This can be obtained in two ways, firstly manually, where a bpm is entered, or a bpm can be calculated through your interaction with the application. Songs will the desired tempo will be returned.</p>
+                        </div>
+
+                    </div>
+
+                    <hr class="featurette-divider"/>
+
+                    <div class="row featurette">
+                        <div class="col-sm-10">
+                            <h2 class="featurette-heading"><span class="text-muted">Playlists</span></h2>
+                            <p class="lead">Once the songs have been returned, and you are logged in you are able to create a playlist in which you can store your songs retrieved from any of the searches. This playlist can be edited if you want.</p>
+                        </div>
+                        <div class="col-sm-2">
+                            <img class="featurette-image img-fluid mx-auto" src="images/playlists.png" width="200dp" />
+                        </div>
+                    </div>
+
+                    <h2>It's easy.</h2>
+                    <div class="container text-center">    
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <h2>WANT</h2>
+                                <p>If you want a specific song for your mood or actions, and you do not know the name your in the right place</p>
+                            </div>
+                            <div class="col-lg-4">
+                                <h2>TAP</h2>
+                                <p>You can tap a tempo using any button on your keyboard through the tempo search</p>
+                            </div>
+                            <div class="col-lg-4">
+                                <h2>RETRIEVE</h2>
+                                <p>Songs will be retrieved based of your desired tempo! Do not worry you can set a specific tolerance </p> 
+                                <p><a class="btn btn-secondary" href="#" role="button">Click here to view details on how this works &raquo;</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>            
+        </ui:composition>
+    </h:body>
+</html>
+

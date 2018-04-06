@@ -8,6 +8,7 @@ package uk.co.queenmaryuniversity.musicrythm.playlists;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -21,7 +22,9 @@ import uk.co.queenmaryuniversity.musicrythm.model.PlayList;
  
 @ManagedBean(name="playlistsLazyView")
 @ViewScoped
-public class PlaylistsLazyView implements Serializable {             
+public class PlaylistsLazyView implements Serializable {     
+    @EJB
+    private MusicRhythmDAO dao;
     private LazyDataModel<PlayList> lazyModel;     
     private PlayList selectedPlaylist;
     @ManagedProperty(value="#{login}")
@@ -30,7 +33,6 @@ public class PlaylistsLazyView implements Serializable {
      
     @PostConstruct
     public void init() { 
-        System.out.println("post construct");
         final List<PlayList> playlists = loginBean.getUser().getPlaylists();        
         lazyModel = new LazyPlaylistDataModel(playlists);
     }
@@ -62,9 +64,11 @@ public class PlaylistsLazyView implements Serializable {
     
     
     public void deletePlaylist(PlayList playlist) {
-        MusicRhythmDAO musicRhythmDAO = new MusicRhythmDAO();
-        musicRhythmDAO.deletePlaylist(playlist);
-        init();
+        System.out.println("user playlist:"+loginBean.getUser().getPlaylists().size());
+        dao.deletePlaylist(playlist);   
+        loginBean.setUser(dao.findUserById(loginBean.getUser().getId()));        
+        System.out.println("user playlist after:"+loginBean.getUser().getPlaylists().size());
+        ((LazyPlaylistDataModel)lazyModel).setDatasource(loginBean.getUser().getPlaylists());
         
     }
     

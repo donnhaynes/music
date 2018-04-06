@@ -7,6 +7,7 @@ package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -17,10 +18,13 @@ import javax.inject.Named;
  */
 @Named(value = "searchsongs")
 @ConversationScoped
-public class SearchSongs implements Serializable{
+public class SearchSongs implements Serializable {
+
+    @EJB
+    private MusicRhythmDAO dao;
     private String searchQuery;
     private Integer bpm;
-    private Integer range=10;
+    private Integer range = 10;
     private List<Song> songs;
 
     /**
@@ -29,12 +33,11 @@ public class SearchSongs implements Serializable{
     public SearchSongs() {
     }
 
-    public String submit(){
-        MusicRhythmDAO dao = new MusicRhythmDAO();
-        this.songs = dao.findSongsByQuery(searchQuery,bpm,range);
+    public String submit() {
+        this.songs = dao.findSongsByQuery(searchQuery, bpm, range);
         return "searchresults";
     }
-    
+
     public String getSearchQuery() {
         return searchQuery;
     }
@@ -66,7 +69,5 @@ public class SearchSongs implements Serializable{
     public void setRange(Integer range) {
         this.range = range;
     }
-    
-    
-    
+
 }

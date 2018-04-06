@@ -6,12 +6,14 @@
 package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -29,6 +31,8 @@ public class User implements Serializable {
     private String password;    
     @OneToMany(mappedBy = "user", orphanRemoval=true)
     private List<PlayList> playlists;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date registrationDate;
 
     public Long getId() {
         return id;
@@ -77,6 +81,13 @@ public class User implements Serializable {
     public void setPlaylists(List<PlayList> playlists) {
         this.playlists = playlists;
     }
-    
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
     
 }

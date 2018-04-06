@@ -1,12 +1,10 @@
 package uk.co.queenmaryuniversity.musicrythm.model;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Date;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 
 /**
  *
@@ -15,7 +13,8 @@ import javax.faces.context.FacesContext;
 @Named(value = "signup")
 @RequestScoped
 public class SignUPManagedBean {
-
+    @EJB
+    private MusicRhythmDAO dao;
     private User user;
     private String confirmPassword;
 
@@ -31,7 +30,7 @@ public class SignUPManagedBean {
     }
 
     public String submit() {
-        MusicRhythmDAO dao = new MusicRhythmDAO();
+        user.setRegistrationDate(new Date());
         dao.saveUser(user);        
         return "signupsuccesful";
     }

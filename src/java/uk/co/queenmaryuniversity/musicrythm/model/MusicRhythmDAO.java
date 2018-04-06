@@ -7,35 +7,34 @@ package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.ejb.Stateless;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
  *
  * @author Don
  */
+@Named
+@Stateless
 public class MusicRhythmDAO {
-
+    @PersistenceContext(unitName = "MusicRhythmPU")
     private EntityManager em;
-
-    public MusicRhythmDAO() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MusicRhythmPU");
-        em = emf.createEntityManager();
-    }
-
-    public void saveUser(User user) {
-        em.getTransaction().begin();
+    
+    public void saveUser(User user) {        
         em.persist(user);
-        em.getTransaction().commit();
+        em.flush();
     }
 
     public void savePlayList(PlayList playlist) {
-        em.getTransaction().begin();
-        em.persist(playlist);        
-        em.getTransaction().commit();    }
+        em.persist(playlist);      
+        em.flush();
+    }  
 
     public User login(String username, String password) {
         try {
@@ -84,16 +83,22 @@ public class MusicRhythmDAO {
     }
 
     public void updatePlaylist(PlayList playlist) {
-        em.getTransaction().begin();
         em.merge(playlist);
-        em.getTransaction().commit();
+    }
+    
+    
+    public void refreshUser(User user) {        
+        em.refresh(user);
+   
     }
 
     public void deletePlaylist(PlayList playList) {
-        em.getTransaction().begin();
-        playList=em.merge(playList);
-        em.remove(playList);
-        em.getTransaction().commit();
+        em.remove(em.find(PlayList.class, playList.getId()));
+    }
 
+    public User findUserById(Long id) {
+        User user=em.find(User.class,id);
+        em.refresh(user);
+        return user;
     }
 }

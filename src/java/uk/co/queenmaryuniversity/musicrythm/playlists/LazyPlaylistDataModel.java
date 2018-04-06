@@ -64,4 +64,13 @@ public class LazyPlaylistDataModel extends LazyDataModel<PlayList> {
             return data;
         }
     }
+
+    public List<PlayList> getDatasource() {
+        return datasource;
+    }
+
+    public void setDatasource(List<PlayList> datasource) {
+        this.datasource = datasource;
+    }
+    
 }
