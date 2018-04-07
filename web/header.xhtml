@@ -1,7 +1,8 @@
 <span xmlns = "http://www.w3.org/1999/xhtml"   
       xmlns:ui = "http://java.sun.com/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <ui:composition>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -44,7 +45,8 @@
                                                 <h:form id="loginForm" rendered="#{!login.isLoggedIn}">
                                                     <div class="form-group">
                                                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                        <h:inputText class="form-control" id="exampleInputEmail2" placeholder="Email address" value="#{login.username}" required="true" requiredMessage="email or username required"/>
+                                                        <h:inputText class="form-control" id="usernameField" placeholder="Email address" value="#{login.username}" required="true" requiredMessage="username required"/>
+                                                        <h:message for="usernameField" style="color:red"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="sr-only" for="exampleInputPassword2">Password</label>
@@ -53,12 +55,21 @@
                                                         <div class="help-block text-right"><a href="">Forget the password ?</a></div>
                                                     </div>
                                                     <div class="form-group">                                                        
-                                                        <h:commandButton id="signInButton" value="Sign in" class="btn btn-primary btn-block" action="#{login.submit()}"                                                                     
-                                                                         binding="#{login.signInbutton}">
+                                                        <p:commandButton id="signInButton" value="Sign in" class="btn btn-primary btn-block" action="#{login.submit()}"                                                                     
+                                                                         binding="#{login.signInbutton}" oncomplete="handleLoginRequest(xhr, status, args)">
                                                             <f:ajax execute="@form" render="@form" />
-                                                        </h:commandButton>
+                                                        </p:commandButton>
                                                         <h:message for="signInButton" style="color:red"/>
                                                     </div>
+                                                    <script type="text/javascript">
+                                                        function handleLoginRequest(xhr, status, args) {
+                                                           
+                                                            console.info("logged in:"+JSON.stringify(args));
+                                                            if (args.loggedIn) {
+                                                                 location.reload();
+                                                            } 
+                                                        }
+                                                    </script>
                                                     <div class="checkbox">
                                                         <label>
                                                             <h:selectBooleanCheckbox value="#{login.rememberMe}" /> keep me logged-in

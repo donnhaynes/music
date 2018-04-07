@@ -101,4 +101,12 @@ public class MusicRhythmDAO {
         em.refresh(user);
         return user;
     }
+    
+    public List<PlayList> retrieveUserPlaylists(User user){
+        Query query = em.createQuery("Select p from PlayList p where p.user = :user");
+        query.setParameter("user", user);
+        return query.getResultList();
+    }
+    
+    
 }

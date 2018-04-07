@@ -10,7 +10,7 @@
             <ui:define name = "content">
                 <h:form id="form" style="margin-top: 25px">
                     <div class='row'>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <p:dataTable var="playlist" value="#{playlistsLazyView.lazyModel}" paginator="true" rows="10"
                                          paginatorPosition="bottom"
                                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -19,7 +19,7 @@
                                 <p:column headerText="Name">
                                     <h:outputText value="#{playlist.name}" />
                                 </p:column>
-                                <p:column headerText="Songs">
+                                <p:column headerText="Songs" style="width:80px;text-align: center">
                                     <h:outputText value="#{playlist.songs.size()}"/>
                                 </p:column>   
                                 <p:column>

@@ -12,6 +12,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -19,7 +20,8 @@ import javax.faces.context.FacesContext;
  */
 @Named(value = "login")
 @SessionScoped
-public class LoginBean implements Serializable{
+public class LoginBean implements Serializable {
+
     @EJB
     private MusicRhythmDAO dao;
     private String username;
@@ -29,33 +31,29 @@ public class LoginBean implements Serializable{
     private User user;
     private UIComponent signInbutton;
 
-    
-    
     /**
      * Creates a new instance of LoginBean
      */
     public LoginBean() {
     }
 
-    public void submit(){
-        this.user = dao.login(username, password);        
-        if (user == null){
-            System.out.println("invalid credentials");
-            // invalid
+    public void submit() {
+        this.user = dao.login(username, password);
+        if (user == null) {
             FacesMessage message = new FacesMessage("Invalid credentials");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(signInbutton.getClientId(context), message);        
-        }else{
-            System.out.println("login succesful");
+            context.addMessage(signInbutton.getClientId(context), message);
+        } else {
+            RequestContext.getCurrentInstance().addCallbackParam("loggedIn", true);
             isLoggedIn = true;
         }
     }
-    
-    public void logout(){
+
+    public void logout() {
         user = null;
         isLoggedIn = false;
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -103,8 +101,5 @@ public class LoginBean implements Serializable{
     public void setSignInbutton(UIComponent signInbutton) {
         this.signInbutton = signInbutton;
     }
-    
-    
-    
-    
+
 }

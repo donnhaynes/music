@@ -19,6 +19,7 @@ import org.primefaces.model.LazyDataModel;
 import uk.co.queenmaryuniversity.musicrythm.model.LoginBean;
 import uk.co.queenmaryuniversity.musicrythm.model.MusicRhythmDAO;
 import uk.co.queenmaryuniversity.musicrythm.model.PlayList;
+import uk.co.queenmaryuniversity.musicrythm.model.User;
  
 @ManagedBean(name="playlistsLazyView")
 @ViewScoped
@@ -33,8 +34,8 @@ public class PlaylistsLazyView implements Serializable {
      
     @PostConstruct
     public void init() { 
-        final List<PlayList> playlists = loginBean.getUser().getPlaylists();        
-        lazyModel = new LazyPlaylistDataModel(playlists);
+        User user = loginBean.getUser();        
+        lazyModel = new LazyPlaylistDataModel(dao.retrieveUserPlaylists(user));
     }
  
     public LazyDataModel<PlayList> getLazyModel() {
@@ -65,11 +66,11 @@ public class PlaylistsLazyView implements Serializable {
     
     public void deletePlaylist(PlayList playlist) {
         System.out.println("user playlist:"+loginBean.getUser().getPlaylists().size());
-        dao.deletePlaylist(playlist);   
-        loginBean.setUser(dao.findUserById(loginBean.getUser().getId()));        
-        System.out.println("user playlist after:"+loginBean.getUser().getPlaylists().size());
-        ((LazyPlaylistDataModel)lazyModel).setDatasource(loginBean.getUser().getPlaylists());
-        
+        dao.deletePlaylist(playlist);           
+        final List<PlayList> playlistsDatasource = ((LazyPlaylistDataModel)lazyModel).getDatasource();        
+        System.out.println("playlists #:"+playlistsDatasource.size());        
+        playlistsDatasource.remove(playlist);        
+        System.out.println("playlists #:"+playlistsDatasource.size());
     }
     
     
