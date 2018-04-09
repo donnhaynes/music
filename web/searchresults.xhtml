@@ -9,7 +9,7 @@
         <ui:composition template="common.xhtml">            
             <ui:define name = "content">
                 <h2> Search results: </h2>
-                <p:dialog header="Add Song to playlist" widgetVar="dlg2" modal="true" width="750px"  position="400,400" onShow="PF('dlg2').initPosition()" appendTo="songsTable">                    
+                <p:dialog header="Add Song to playlist" widgetVar="dlg2" modal="true" width="80%"  position="100,100" onShow="PF('dlg2').initPosition()" appendTo="songsTable">                    
                     <p:outputPanel id="addSongToPlaylist" style="text-align:center;">   
                         <h:outputText value="#{songsLazyView.songToBeAddedToPlaylist.name}" />
                         Select playlist:
