@@ -8,14 +8,15 @@
     <h:body>        
         <ui:composition template="common.xhtml">            
             <ui:define name = "content">
-                <h:form id="form" style="margin-top: 25px">
-                    <div class='row'>
+                <div class='row'>
+                    <h:form id="form" style="margin-top: 25px">
                         <div class="col-sm-4">
+                            <h2>Your playlists</h2>
                             <p:dataTable var="playlist" value="#{playlistsLazyView.lazyModel}" paginator="true" rows="10"
                                          paginatorPosition="bottom"
                                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                          rowsPerPageTemplate="10,20,30" selectionMode="single" selection="#{playlistsLazyView.selectedPlaylist}" id="playlistsTable" lazy="true">       
-                                <p:ajax event="rowSelect" listener="#{playlistsLazyView.onRowSelect}" update=":form:playlistDetail"/>
+                                <p:ajax event="rowSelect" listener="#{playlistsLazyView.onRowSelect}" update=":form2:playlistDetail"/>
                                 <p:column headerText="Name">
                                     <h:outputText value="#{playlist.name}" />
                                 </p:column>
@@ -23,22 +24,37 @@
                                     <h:outputText value="#{playlist.songs.size()}"/>
                                 </p:column>   
                                 <p:column>
-                                    <p:commandButton value="Delete" id="ajax" update=":form" actionListener="#{playlistsLazyView.deletePlaylist(playlist)}" styleClass="ui-priority-primary" onclick="PF('dlg2').show();"/>                            
+                                    <p:commandButton value="Delete" id="ajax" update=":form" actionListener="#{playlistsLazyView.deletePlaylist(playlist)}" styleClass="ui-priority-primary"/>                            
                                 </p:column>
                             </p:dataTable>   
                         </div>
-                        <div class="col-sm-3">
-                            <p:outputPanel id="playlistDetail">
-                                <h2>  <h:outputText value="#{playlistsLazyView.selectedPlaylist.name}" /></h2>
-                                <ul>
-                                    <ui:repeat var="song" value="#{playlistsLazyView.selectedPlaylist.songs}" varStatus="status">                               
-                                        <li><h:outputText value="#{song.name}"/></li>
-                                    </ui:repeat>
-                                </ul>
-                            </p:outputPanel>
-                        </div>
+                    </h:form>
+                    <div class="col-sm-8">
+                        <h:form id="form2">
+                        <p:outputPanel id="playlistDetail">
+                            <h2><h:outputText value="#{playlistsLazyView.selectedPlaylist.name}"></h:outputText> playlist songs</h2>
+                            <p:dataTable var="song" value="#{playlistsLazyView.playlistSongsLazyModel}" rows="10"                                                                                  
+                                         id="playlistsSongsTable" lazy="true">                                                                        
+                                <p:column headerText="Name">
+                                    <h:outputText value="#{song.name}" />
+                                </p:column>
+                                <p:column headerText="Artist">
+                                    <h:outputText value="#{song.creators[0].name}"/>
+                                </p:column>   
+                                <p:column headerText="BPM">
+                                    <h:outputText value="#{song.bpm}"/>
+                                </p:column> 
+                                <p:column style="width: 140px">
+                                    <p:column>
+                                        <p:commandButton value="Delete" id="ajax2" update=":form2:playlistDetail" action="#{playlistsLazyView.deleteSong(song)}" styleClass="ui-priority-primary"/>                            
+                                    </p:column>
+                                </p:column>
+                            </p:dataTable>  
+                        </p:outputPanel>
+                            </h:form>
                     </div>
-                </h:form>
+                </div>
+      
             </ui:define>            
         </ui:composition>
     </h:body>

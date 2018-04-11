@@ -18,23 +18,23 @@
                     <ul class="nav navbar-nav">
                         <li class="#{view.viewId eq '/index.xhtml' ? 'active' : ''}"><a href="index.xhtml">Home</a></li>                        
                         <li class="#{view.viewId eq '/searchpage.xhtml' or view.viewId eq '/searchresults.xhtml'? 'active' : ''}"><a href="searchpage.xhtml">Search Song</a></li>
-                        <h:panelGroup rendered="#{login.isLoggedIn}"><li class="#{view.viewId eq '/playlists.xhtml' ? 'active' : ''}"><a href="playlists.xhtml">Browse Playlists</a></li></h:panelGroup>
+                        <h:panelGroup rendered="#{login.isLoggedIn()}"><li class="#{view.viewId eq '/playlists.xhtml' ? 'active' : ''}"><a href="playlists.xhtml">Browse Playlists</a></li></h:panelGroup>
                     </ul>
 
 
-                    <h:panelGroup rendered="#{login.isLoggedIn}">                                
+                    <h:panelGroup rendered="#{login.isLoggedIn()}">                                
                         <h:form>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
                                     <a href="userprofile.xhtml"><img style="" width="30px" alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive"/> </a>
                                 </li>
                                 <li class="dropdown">
-                                    <h:commandLink action="#{login.logout()}" class="dropdown-toggle" ><b>Logout</b></h:commandLink>
+                                    <h:commandButton  action="#{login.logout()}" class="dropdown-toggle" value="logout"></h:commandButton>
                                 </li>
                             </ul>
                         </h:form>
                     </h:panelGroup>
-                    <h:panelGroup rendered="#{!login.isLoggedIn}">
+                    <h:panelGroup rendered="#{!login.isLoggedIn()}">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
 
@@ -42,7 +42,7 @@
                                     <li>
                                         <div class="row">
                                             <div class="col-md-12" style="padding:  15px">
-                                                <h:form id="loginForm" rendered="#{!login.isLoggedIn}">
+                                                <h:form id="loginForm" >
                                                     <div class="form-group">
                                                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
                                                         <h:inputText class="form-control" id="usernameField" placeholder="Email address" value="#{login.username}" required="true" requiredMessage="username required"/>
@@ -57,7 +57,7 @@
                                                     <div class="form-group">                                                        
                                                         <p:commandButton id="signInButton" value="Sign in" class="btn btn-primary btn-block" action="#{login.submit()}"                                                                     
                                                                          binding="#{login.signInbutton}" oncomplete="handleLoginRequest(xhr, status, args)">
-                                                            <f:ajax execute="@form" render="@form" />
+                                                            <f:ajax execute="loginForm" render="loginForm" />
                                                         </p:commandButton>
                                                         <h:message for="signInButton" style="color:red"/>
                                                     </div>
