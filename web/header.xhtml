@@ -23,13 +23,13 @@
 
 
                     <h:panelGroup rendered="#{login.isLoggedIn()}">                                
-                        <h:form>
+                        <h:form id="logoutform">
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
                                     <a href="userprofile.xhtml"><img style="" width="30px" alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive"/> </a>
                                 </li>
                                 <li class="dropdown">
-                                    <h:commandButton  action="#{login.logout()}" class="dropdown-toggle" value="logout"></h:commandButton>
+                                    <h:commandLink  actionListener="#{login.logout()}" value="logout2"></h:commandLink>
                                 </li>
                             </ul>
                         </h:form>

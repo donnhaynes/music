@@ -6,6 +6,7 @@
 package uk.co.queenmaryuniversity.musicrythm.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -23,6 +24,7 @@ import org.primefaces.context.RequestContext;
 @Named(value = "login")
 @SessionScoped
 public class LoginBean implements Serializable {
+    private Date lastCalled=new Date();
 
     @EJB
     private MusicRhythmDAO dao;
@@ -48,19 +50,24 @@ public class LoginBean implements Serializable {
 
     public void submit() {
         System.out.println("SUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMITSUBMIT");
-        this.setUser(dao.login(username, password));
-        if (user == null) {
+        User userLogin = dao.login(username, password);
+        if (userLogin == null) {
             FacesMessage message = new FacesMessage("Invalid credentials");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(signInbutton.getClientId(context), message);
         } else {
+            this.user=userLogin;
             RequestContext.getCurrentInstance().addCallbackParam("loggedIn", true);
+            lastCalled=new Date();
         }
     }
 
-    public void logout() {
+    public boolean logout() {
         System.out.println("LOGOUT_LOGOUT_LOGOUT_LOGOUT_LOGOUT_LOGOUT_LOGOUT_LOGOUT_LOGOUT_LOGOUT_LOGOUT_LOGOUT_LOGOUT");
-        user = null;
+        if ((new Date().getTime()-lastCalled.getTime()) > 1000){
+            setUser(null);
+        }        
+        return true;
     }
 
     public String getUsername() {
