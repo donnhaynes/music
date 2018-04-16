@@ -33,6 +33,7 @@ public class LoginBean implements Serializable {
     private Boolean rememberMe;
     private User user;
     private UIComponent signInbutton;
+    private boolean isLoggedIn;
 
     /**
      * Creates a new instance of LoginBean
@@ -115,7 +116,17 @@ public class LoginBean implements Serializable {
     public boolean isLoggedIn(){
         /*System.out.println(" logged In:"+(user != null));
         System.out.println("*******************");*/
+       return user != null;
+    }
+
+    public boolean isIsLoggedIn() {
         return user != null;
     }
+
+    public void setIsLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
+    }
+    
+    
 
 }
